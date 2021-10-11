@@ -8,9 +8,9 @@ import {
   faUserPlus,
   faOm,
   faSignOutAlt,
-  faRocket,
+  faRocket
   // faStarHalfAlt,
-  faLocationArrow
+  // faLocationArrow
 } from '@fortawesome/free-solid-svg-icons'
 import styled from 'styled-components'
 import { Link, useHistory } from 'react-router-dom'

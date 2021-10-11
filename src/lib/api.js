@@ -33,7 +33,7 @@ export function getSingleSprint(sprintId) {
 // * SPRINT GOALS REQUESTS
 
 export function getAllSprintGoals(sprintId) {
-  return axios.get(`${baseUrl}/sprints/${sprintId}/sprint-goals`)
+  return axios.get(`${baseUrl}/sprints/${sprintId}/sprint-goals/`)
 }
 
 // * SPRINT HABIT REQUESTS
@@ -67,7 +67,11 @@ export function editASprintHabit(sprintId, habitId, formData) {
 // * DAILY MOODS
 
 export function addMoods(sprintId, moodName) {
-  return axios.post(`${baseUrl}/sprints/${sprintId}/moods/`, { moodName } , headers())
+  return axios.post(
+    `${baseUrl}/sprints/${sprintId}/moods/`,
+    { moodName },
+    headers()
+  )
 }
 
 export function getCurrentMoods(sprintId) {
@@ -75,19 +79,27 @@ export function getCurrentMoods(sprintId) {
 }
 
 export function deleteMood(sprintId, moodId) {
-  return axios.delete(`${baseUrl}/sprints/${sprintId}/moods/${moodId}`, headers() )
+  return axios.delete(
+    `${baseUrl}/sprints/${sprintId}/moods/${moodId}/`,
+    headers()
+  )
 }
 
-//* DAILY ENERGY 
+//* DAILY ENERGY
 
 export function addEnergyLevel(sprintId, energyLevel) {
-  return axios.post(`${baseUrl}/sprints/${sprintId}/energy-levels/`, { energyLevel } , headers())
+  return axios.post(
+    `${baseUrl}/sprints/${sprintId}/energy-levels/`,
+    { energyLevel },
+    headers()
+  )
 }
 
 // * AUTH / USER REQUESTS
 
 export function registerUser(formData) {
   console.log(formData)
+  console.log(baseUrl)
   return axios.post(`${baseUrl}/auth/register/`, formData)
 }
 

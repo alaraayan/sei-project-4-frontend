@@ -24,6 +24,7 @@ function Register() {
   const handleSubmit = async event => {
     event.preventDefault()
     try {
+      console.log(formData)
       await registerUser(formData)
       toast.dark('🚀 Thanks for registering. Welcome to zenith!', {
         position: 'top-right',

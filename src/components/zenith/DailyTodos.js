@@ -16,7 +16,7 @@ function DailyToDoList() {
     React.createRef(),
     React.createRef(),
     React.createRef(),
-    React.createRef(),
+    React.createRef()
   ])
   const [toDos, setToDos] = React.useState({
     toDo1: { draft: '', final: '', id: null },
@@ -36,7 +36,7 @@ function DailyToDoList() {
     }))
     const temporaryToDos = [
       ...currentSprint.toDos.sort((a, b) => a.id - b.id),
-      ...fillerToDos,
+      ...fillerToDos
     ]
     temporaryToDos.length = 5
     const syncedToDos = temporaryToDos.reduce(
