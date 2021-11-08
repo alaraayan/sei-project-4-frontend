@@ -7,8 +7,8 @@ import styled from 'styled-components'
 function Weather() {
   const { user } = React.useContext(UserContext)
 
-  const baseUrl = 'http://api.openweathermap.org/data/2.5/weather?'
-  const apiKey = '44546322b5e17c3a35e117a1c5067ad9'
+  const baseUrl =
+    'https://api.weatherapi.com/v1/current.json?key=490b3fab853a4ecebb8191747210811'
 
   const [weatherData, setWeatherData] = React.useState(null)
   const isLoading = !weatherData
@@ -19,9 +19,7 @@ function Weather() {
     }
     const getData = async () => {
       try {
-        const res = await axios.get(
-          baseUrl + `q=${user.city || 'London'}&appid=${apiKey}`
-        )
+        const res = await axios.get(baseUrl + `&q=${user.city}`)
         setWeatherData(res.data)
       } catch (err) {
         console.log(err)
@@ -47,27 +45,15 @@ function Weather() {
                   }}
                 >
                   <h3>
-                    <i className="fa fa-street-view"></i> {weatherData.name} |{' '}
-                    {weatherData.sys.country}
+                    <i className="fa fa-street-view"></i>{' '}
+                    {weatherData.location.name} | {weatherData.location.country}
                   </h3>
                   <img
-                    src={`http://openweathermap.org/img/w/${weatherData.weather[0].icon}.png`}
-                    alt="imgicon"
+                    src={weatherData.current.condition.icon}
+                    alt="current weather icon"
                     style={{ flex: '0 0 50px', height: 50 }}
                   />
-                  <p>
-                    {' '}
-                    {weatherData.weather[0].main} |{' '}
-                    {parseFloat(weatherData.main.temp - 273.15).toFixed(1)}
-                    &deg;C{' '}
-                  </p>
-                  <p>
-                    Min:{' '}
-                    {parseFloat(weatherData.main.temp_min - 273.15).toFixed(1)}
-                    &deg;C | Max:{' '}
-                    {parseFloat(weatherData.main.temp_max - 273.15).toFixed(1)}
-                    &deg;C | Humidity: {weatherData.main.humidity}%{' '}
-                  </p>
+                  <p>{weatherData.current.temp_c}&deg;C</p>
                 </div>
               </Container>
             </>
