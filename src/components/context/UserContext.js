@@ -24,6 +24,7 @@ export const UserProvider = props => {
     const getData = async () => {
       try {
         const res = await getUserWithReset(id)
+        console.log(res.data)
         setUser(res.data)
       } catch (err) {
         console.log(err)

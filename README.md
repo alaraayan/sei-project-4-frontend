@@ -1,6 +1,6 @@
 # Project-4: Zenith
 
-Zenith | Full-stack app | 7-day sprint | 3-person team
+Zenith | Full-stack app | 10-day sprint | 3-person team
 
 Deployed version of our app: - https://ga-zenith.netlify.app/
 

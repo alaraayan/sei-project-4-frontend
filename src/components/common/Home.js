@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { isAuthenticated } from '../../lib/auth'
 
 // import gradientBackground from '../../assets/gradient-background.jpg'
@@ -21,7 +21,7 @@ import GlassCard from '../../styles/styled-components/GlassCard'
 
 function Home() {
   const isLoggedIn = isAuthenticated()
-
+  useLocation()
   return (
     <Main>
       {/* <Wrapper> */}

@@ -98,13 +98,13 @@ function DailyToDoList() {
     try {
       if (existingId) {
         const { data: putData } = await axios.put(
-          `/api/sprints/${currentSprint?.id}/to-dos/${existingId}/`,
+          `${process.env.REACT_APP_PROD_URL}/sprints/${currentSprint?.id}/to-dos/${existingId}/`,
           { toDoItem: toDoTextToUpdate }
         )
         return putData.id
       }
       const { data: postData } = await axios.post(
-        `/api/sprints/${currentSprint?.id}/to-dos/`,
+        `${process.env.REACT_APP_PROD_URL}/sprints/${currentSprint?.id}/to-dos/`,
         {
           toDoItem: toDoTextToUpdate,
         }
@@ -129,12 +129,12 @@ function DailyToDoList() {
   const clearToDos = async () => {
     try {
       const { data } = await axios.get(
-        `/api/sprints/${currentSprint?.id}/to-dos/`
+        `${process.env.REACT_APP_PROD_URL}/sprints/${currentSprint?.id}/to-dos/`
       )
       for (const toDo of data) {
         try {
           await axios.delete(
-            `/api/sprints/${currentSprint?.id}/to-dos/${toDo.id}/`
+            `${process.env.REACT_APP_PROD_URL}/sprints/${currentSprint?.id}/to-dos/${toDo.id}/`
           )
         } catch (err) {
           console.log(err)

@@ -94,13 +94,13 @@ function NewSprintHabits() {
     try {
       if (existingId) {
         const { data: putData } = await axios.put(
-          `/api/sprints/${currentSprint?.id}/sprint-habits/${existingId}/`,
+          `${process.env.REACT_APP_PROD_URL}/sprints/${currentSprint?.id}/sprint-habits/${existingId}/`,
           { habitName: habitToUpdate }
         )
         return putData.id
       }
       const { data: postData } = await axios.post(
-        `/api/sprints/${currentSprint?.id}/sprint-habits/`,
+        `${process.env.REACT_APP_PROD_URL}/sprints/${currentSprint?.id}/sprint-habits/`,
         {
           habitName: habitToUpdate,
         }
@@ -125,12 +125,12 @@ function NewSprintHabits() {
   const clearSprintHabits = async () => {
     try {
       const { data } = await axios.get(
-        `/api/sprints/${currentSprint?.id}/sprint-habits/`
+        `${process.env.REACT_APP_PROD_URL}/sprints/${currentSprint?.id}/sprint-habits/`
       )
       for (const sprintHabit of data) {
         try {
           await axios.delete(
-            `/api/sprints/${currentSprint?.id}/sprint-habits/${sprintHabit.id}/`
+            `${process.env.REACT_APP_PROD_URL}/sprints/${currentSprint?.id}/sprint-habits/${sprintHabit.id}/`
           )
         } catch (err) {
           console.log(err)

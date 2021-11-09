@@ -101,13 +101,13 @@ function NewSprintGoals() {
     try {
       if (existingId) {
         const { data: putData } = await axios.put(
-          `/api/sprints/${currentSprint?.id}/sprint-goals/${existingId}/`,
+          `${process.env.REACT_APP_PROD_URL}/sprints/${currentSprint?.id}/sprint-goals/${existingId}/`,
           { goalName: sprintGoalToUpdate }
         )
         return putData.id
       }
       const { data: postData } = await axios.post(
-        `/api/sprints/${currentSprint?.id}/sprint-goals/`,
+        `${process.env.REACT_APP_PROD_URL}/sprints/${currentSprint?.id}/sprint-goals/`,
         {
           goalName: sprintGoalToUpdate,
         }
@@ -132,12 +132,12 @@ function NewSprintGoals() {
   const clearSprintGoals = async () => {
     try {
       const { data } = await axios.get(
-        `/api/sprints/${currentSprint?.id}/sprint-goals/`
+        `${process.env.REACT_APP_PROD_URL}/sprints/${currentSprint?.id}/sprint-goals/`
       )
       for (const sprintGoal of data) {
         try {
           await axios.delete(
-            `/api/sprints/${currentSprint?.id}/sprint-goals/${sprintGoal.id}/`
+            `${process.env.REACT_APP_PROD_URL}/sprints/${currentSprint?.id}/sprint-goals/${sprintGoal.id}/`
           )
         } catch (err) {
           console.log(err)

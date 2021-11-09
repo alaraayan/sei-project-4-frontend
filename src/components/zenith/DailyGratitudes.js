@@ -102,13 +102,13 @@ function DailyGratitudes() {
     try {
       if (existingId) {
         const { data: putData } = await axios.put(
-          `/api/sprints/${currentSprint?.id}/gratitudes/${existingId}/`,
+          `${process.env.REACT_APP_PROD_URL}/sprints/${currentSprint?.id}/gratitudes/${existingId}/`,
           { dailyGratitude: gratitudeText }
         )
         return putData.id
       }
       const { data: postData } = await axios.post(
-        `/api/sprints/${currentSprint?.id}/gratitudes/`,
+        `${process.env.REACT_APP_PROD_URL}/sprints/${currentSprint?.id}/gratitudes/`,
         {
           dailyGratitude: gratitudeText,
         }
@@ -134,12 +134,12 @@ function DailyGratitudes() {
   const clearGratitudes = async () => {
     try {
       const { data } = await axios.get(
-        `/api/sprints/${currentSprint?.id}/gratitudes/`
+        `${process.env.REACT_APP_PROD_URL}/sprints/${currentSprint?.id}/gratitudes/`
       )
       for (const gratitude of data) {
         try {
           await axios.delete(
-            `/api/sprints/${currentSprint?.id}/gratitudes/${gratitude.id}/`
+            `${process.env.REACT_APP_PROD_URL}/sprints/${currentSprint?.id}/gratitudes/${gratitude.id}/`
           )
         } catch (err) {
           console.log(err)

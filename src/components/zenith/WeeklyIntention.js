@@ -8,6 +8,7 @@ import { faEdit } from '@fortawesome/free-solid-svg-icons'
 
 function WeeklyIntention() {
   const { currentSprint } = React.useContext(UserContext)
+
   const inputRef = React.useRef()
   const isLoading = !currentSprint
   const [intention, setIntention] = React.useState({
@@ -20,6 +21,7 @@ function WeeklyIntention() {
     if (!currentSprint) {
       return
     }
+    console.log(currentSprint.weeklyIntentions[0])
     const weeklyIntention = currentSprint.weeklyIntentions[0]
 
     if (!weeklyIntention) {
@@ -60,15 +62,17 @@ function WeeklyIntention() {
     try {
       if (existingId) {
         const { data: putData } = await axios.put(
-          `/api/sprints/${currentSprint?.id}/intentions/${existingId}/`,
+          `${process.env.REACT_APP_PROD_URL}/sprints/${currentSprint?.id}/intentions/${existingId}/`,
           { weeklyIntention: intentionText }
         )
+        console.log(putData, currentSprint)
         return putData.id
       }
       const { data: postData } = await axios.post(
-        `/api/sprints/${currentSprint?.id}/intentions/`,
+        `${process.env.REACT_APP_PROD_URL}/sprints/${currentSprint?.id}/intentions/`,
         { weeklyIntention: intentionText }
       )
+      console.log(postData, currentSprint)
       return postData.id
     } catch (err) {
       console.log(err)
