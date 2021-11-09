@@ -1,8 +1,8 @@
 # Project-4: Zenith
 
-Zenith | Full-stack app | 10-day sprint | 3-person team
+#### General Assembly SEI Project-4 | Zenith | Full-stack app | 10-day sprint | 3-person team
 
-Deployed version of our app: - https://ga-zenith.netlify.app/
+Deployed version of our app can be found here: - https://ga-zenith.netlify.app/
 
 To access all of the features you can register or use the following credentials to login:
 
