@@ -71,18 +71,72 @@ The brief given was to:
 
 ### Preparation & Organisation
 
+Our whole project revolved around the dashboard so we started by determining how we wanted it to look and feel. After the wireframing stage we worked on our ERD. At first it seemed very complex, all the daily, weekly and monthly tasks etc. but once we realised everything was actually tied to the user and the current sprint it all clicked.
+
+Final stage of our preparation was setting up our Trello board. We were all already familiar with working with Trello and it helped keep all our tasks organised. We set it up so we would have a few stages for every task to generate a better flow.
+
+We had daily standups within our group and worked together throughout the day. We merged our Git branches every evening, tested the app and assigned new tasks for the next day. Although we worked on our separate tasks, because the functionalities were very similar we were often collaborating especially while doing the backend.
+
+###### Our Trello board:
+
 <img src="images/trello.png" alt="trello board"/>
+
+###### Our wireframe showing the dashboard and all its components:
+
 <img src="images/wireframe.png" alt="wireframe"/>
+
+###### Our ERD showing how everthing is connected to the sprint which is connected to the user:
+
 <img src="images/erd.png" alt="erd diagram"/>
 
 ### Backend
+
+After the planning stage was done our Trello board was populated with backend tasks. Same as project-3 we wanted to finish backend completely before moving on to the frontend. Being new to Python and Django we decided to divide functionalities up evenly so we were all dealing with them A to Z instead of one person doing all the models and the other doing all the views. Chloe focused mainly on the user and Elsa and I handled the sprint related tasks. I took on the challenge to build the backend for sprint habits, daily to-do list and the editing/deleting functionalities.
+
+The model for a to-do item looked like this:
+
+```python
+class DailyToDo(models.Model):
+    to_do_item = models.CharField(max_length=50, blank = True, null = True, unique = False)
+    is_done = models.BooleanField(default=False)
+    start_date = models.DateField(auto_now_add=True)
+    end_date = models.DateField()
+    sprint = models.ForeignKey(
+        Sprint,
+        related_name='to_dos',
+        on_delete=models.CASCADE,
+        null=True
+    )
+    def __str__(self):
+        return f'To-Do: {self.to_do_item}'
+```
+
+Because everything was individually connected to the sprint creating the relationships within serializers -what we were most dreading before figuring things out with our ERD- was fairly simple. Here's our `PopulatedSprintSerializer`:
+
+```python
+class PopulatedSprintSerializer(SprintSerializer):
+    owner = UserSerializer()
+    sprint_goals = SprintGoalSerializer(many=True)
+    sprint_habits = SprintHabitSerializer(many=True)
+    weekly_intentions = WeeklyIntentionSerializer(many=True)
+    moods = DailyMoodSerializer(many=True)
+    energy_levels = DailyEnergySerializer(many=True)
+    to_dos = DailyToDoSerializer(many=True)
+    daily_gratitudes = DailyGratitudeSerializer(many=True)
+```
+
+Getting our views done proved to be more difficult. We wanted each item to have an end date calculated automatically depending on whether it was a daily item or a sprint habit -which is supposed to end with the sprint-. To achieve this we used `timedelta`. We would then run a check to reset if an item's end date has been reached in the frontend.
+
+```python
+request.data["end_date"] = date.today() + timedelta(days=6)
+```
 
 ### Frontend
 
 ## Screenshots
 
-<img src="images/new-sprint.png" alt="new user redirection" style="display:inline; width:50%"/>
-<img src="images/sprint-start-1.png" alt="new sprint naming" style="display:inline; width:50%"/>
+<img src="images/new-sprint.png" alt="new user redirection"/>
+<img src="images/sprint-start-1.png" alt="new sprint naming"/>
 <img src="images/dashboard.png" alt="dashboard"/>
 <img src="images/401.png" alt="authorisation error"/>
 <img src="images/404.png" alt="page not found error"/>
