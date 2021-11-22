@@ -81,8 +81,8 @@ The brief given was to:
 
 ## Screenshots
 
-<img src="images/new-sprint.png" alt="new user redirection"/>
-<img src="images/sprint-start-1.png" alt="new sprint naming"/>
+<img src="images/new-sprint.png" alt="new user redirection" style="display:inline; width:50%"/>
+<img src="images/sprint-start-1.png" alt="new sprint naming" style="display:inline; width:50%"/>
 <img src="images/dashboard.png" alt="dashboard"/>
 <img src="images/401.png" alt="authorisation error"/>
 <img src="images/404.png" alt="page not found error"/>
