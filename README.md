@@ -1,4 +1,4 @@
-# Project-4: Zenith
+# <img src="src/assets/zenithLogo.png" alt="logo" style="height:20px; width:20px"/> Project-4: Zenith
 
 #### General Assembly SEI Project-4 | Zenith | Full-stack app | 10-day sprint | 3-person team
 
@@ -22,8 +22,8 @@ To access the backend repository please [click here.](https://github.com/alaraay
 
 ## Collaborators
 
-- Chloe Brown - [/chloebuilds](https://github.com/chloebuilds)
-- Elsa Guibert- [/Elsa245](https://github.com/Elsa245)
+- Chloe Brown - [@chloebuilds](https://github.com/chloebuilds)
+- Elsa Guibert- [@Elsa245](https://github.com/Elsa245)
 
 ## Brief
 
@@ -66,6 +66,30 @@ The brief given was to:
 - Google Chrome dev tools
 - VScode
 - ESlint
+
+## Process
+
+### Preparation & Organisation
+
+<img src="images/trello.png" alt="trello board"/>
+<img src="images/wireframe.png" alt="wireframe"/>
+<img src="images/erd.png" alt="erd diagram"/>
+
+### Backend
+
+### Frontend
+
+## Screenshots
+
+<img src="images/new-sprint.png" alt="new user redirection"/>
+<img src="images/sprint-start-1.png" alt="new sprint naming"/>
+<img src="images/dashboard.png" alt="dashboard"/>
+<img src="images/401.png" alt="authorisation error"/>
+<img src="images/404.png" alt="page not found error"/>
+
+## Challenges
+
+## Wins
 
 ## Key Learnings
 
