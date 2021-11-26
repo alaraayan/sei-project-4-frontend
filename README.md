@@ -37,7 +37,7 @@ The brief given was to:
 - **Have a visually impressive design** to kick your portfolio up a notch and have something to wow future clients & employers. **ALLOW** time for this.
 - **Be deployed online** so it's publicly accessible.
 
-## Techonologies Used
+## Technologies Used
 
 **Frontend**
 
@@ -91,7 +91,7 @@ We had daily standups within our group and worked together throughout the day. W
 
 ### Backend
 
-After the planning stage was done our Trello board was populated with backend tasks. Same as project-3 we wanted to finish backend completely before moving on to the frontend. Being new to Python and Django we decided to divide functionalities up evenly so we were all dealing with them A to Z instead of one person doing all the models and the other doing all the views. Chloe focused mainly on the user and Elsa and I handled the sprint related tasks. I took on the challenge to build the backend for sprint habits, daily to-do list and the editing/deleting functionalities.
+After the planning stage was done our Trello board was populated with backend tasks. Same as project-3 we wanted to finish the backend completely before moving on to the frontend. Being new to Python and Django we decided to divide functionalities up evenly so we were all dealing with them A to Z instead of one person doing all the models and the other doing all the views. Chloe focused mainly on the user and Elsa and I handled the sprint related tasks. I took on the challenge to build the backend for sprint habits, daily to-do list and the editing/deleting functionalities.
 
 The model for a to-do item looked like this:
 
@@ -135,7 +135,7 @@ request.data["end_date"] = date.today() + timedelta(days=6)
 
 Once we were certain our backend was working fully, we started working on the frontend. Being comfortable with React by this point, we knew what we wanted to do and all of us were really excited to bring all of the components together in the dashboard. We needed to make sure that only logged in users would be able to access certain URLs and a user won't be able to see another user's dashboard even if they accidentally put in the correct URL. We decided to keep things light throughout Zenith and I created custom 401 and 404 pages the user would be sent to if they made an incorrect request.
 
-In the frontend I took on the opportunity to build the `newSprint` component. With the user's experience in mind, I wanted the user to create a sprint step by step in order to not feel overwhelmed. A logged in user would be directed to the new sprint page if they were not in an active sprint -`currentSprint ? history.push('/dashboard') : history.push('/sprints/new')`-. Only once the sprint is created a user is able to access their dashboard, which is reset every time the user is logged in, checking and removing expired data accordingly. Since everything is derived from the user, to achieve this functionality we created a `UserContext`. With the `UserContext` we were able to get only relevant data and therefore updating the dashboard as needed automatically every time a user logged in.
+In the frontend I took on the opportunity to build the `newSprint` component. With the user's experience in mind, I wanted the user to create a sprint step by step in order to not feel overwhelmed. A logged in user would be directed to the new sprint page if they were not in an active sprint -`currentSprint ? history.push('/dashboard') : history.push('/sprints/new')`-. Only once the sprint is created a user is able to access their dashboard, which is reset every time the user is logged in, checking and removing expired data accordingly. Since everything is derived from the user, to achieve this functionality we created a `UserContext`. With the `UserContext` we were able to get only relevant data and therefore update the dashboard as needed automatically every time a user logged in.
 
 We also used Styled Components for this project. None of us had used it before and was very intrigued. It took a minute to get used to but once we got the hang of it I'd say we all enjoyed working with it.
 
@@ -157,7 +157,7 @@ We also used Styled Components for this project. None of us had used it before a
 
 ## Challenges
 
-I believe we underestimated how complex Zenith is in the beginning and how much learning we were going to have to do in order to bring it to life. Dealing with time was new to all of us and we had to do a lot of research to implement it the way we wanted to. Also we've never used React Context and Styled Components before and learning them was an exciting challenge. Although it felt overwhelming at times I am so glad we chose to not comprimise certain key aspects of Zenith and through our resilience produced the project we set out to.
+I believe we underestimated how complex Zenith is in the beginning and how much learning we were going to have to do in order to bring it to life. Dealing with time was new to all of us and we had to do a lot of research to implement it the way we wanted to. Also we've never used React Context and Styled Components before and learning them was an exciting challenge. Although it felt overwhelming at times I am so glad we chose to not compromise certain key aspects of Zenith and through our resilience produced the project we set out to.
 
 ## Wins
 
@@ -201,7 +201,7 @@ The biggest challenge we faced as a team on this project was to incorporate time
 
 The main takeaway for me was that I got to develop the muscle of switching between programming languages. All our previous projects were built using JavaScript and for this project, we had to go back and forth between JavaScript and Python. This felt challenging at first, but felt more and more natural with time and ended up being helpful to differentiate logic.
 
-We worked incredibly well together as a team and complimented each other's strengths and in the end, have a project we are proud of.</p>
+We worked incredibly well together as a team and complemented each other's strengths and in the end, have a project we are proud of.</p>
 
 ## Future Features
 
