@@ -29,12 +29,11 @@ To access the backend repository please [click here.](https://github.com/alaraay
 
 The brief given was to:
 
-- **Build a full-stack application** by making your own backend and your own front-end
-- **Use a Python Django API** using Django REST Framework to serve your data from a Postgres database
-- **Consume your API with a separate front-end** built with React
-- **Be a complete product** which most likely means multiple relationships and CRUD functionality for at least a couple of models
-- **Implement thoughtful user stories/wireframes** that are significant enough to help you know which features are core MVP and which you can cut
-- **Have a visually impressive design** to kick your portfolio up a notch and have something to wow future clients & employers. **ALLOW** time for this.
+- **Build a full-stack application** by making your own backend and your own frontend.
+- **Use a Python Django API** using Django REST Framework to serve your data from a Postgres database.
+- **Consume your API with a separate front-end** built with React.
+- **Be a complete product** which most likely means multiple relationships and CRUD functionality for at least a couple of models.
+- **Implement thoughtful user stories/wireframes** that are significant enough to help you know which features are core MVP and which you can cut.
 - **Be deployed online** so it's publicly accessible.
 
 ## Technologies Used
@@ -75,7 +74,7 @@ Our whole project revolved around the dashboard so we started by determining how
 
 Final stage of our preparation was setting up our Trello board. We were all already familiar with working with Trello and it helped keep all our tasks organised. We set it up so we would have a few stages for every task to generate a better flow.
 
-We had daily standups within our group and worked together throughout the day. We merged our Git branches every evening, tested the app and assigned new tasks for the next day. Although we worked on our separate tasks, because the functionalities were very similar we were often collaborating especially while doing the backend.
+We had daily standups within our group and worked together throughout the day. We merged our Git branches every evening, tested the app and assigned new tasks for the next day. Although we worked on our separate tasks, because the functionalities were very similar we were often collaborating, especially while doing the backend.
 
 ###### Our Trello board:
 
@@ -85,7 +84,7 @@ We had daily standups within our group and worked together throughout the day. W
 
 <img src="images/wireframe.png" alt="wireframe"/>
 
-###### Our ERD showing how everthing is connected to the sprint which is connected to the user:
+###### Our ERD showing how everything is connected to the sprint which is connected to the user:
 
 <img src="images/erd.png" alt="erd diagram"/>
 
@@ -207,9 +206,9 @@ We worked incredibly well together as a team and complemented each other's stren
 
 If we had more time on this project we would add:
 
-- Responsiveness
-- Dark mode / light mode
-- Drag and drop functionality for the dashboard components
-- Ability to mark tasks as 'done' manually
-- View past sprints
-- See and filter tasks in the calendar component
+- Responsiveness.
+- Dark mode / light mode.
+- Drag and drop functionality for the dashboard components.
+- Ability to mark tasks as 'done' manually.
+- View past sprints.
+- See and filter tasks in the calendar component.
