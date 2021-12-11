@@ -1,18 +1,22 @@
 import React from 'react'
-import styled from 'styled-components'
+import { useLocation } from 'react-router-dom'
+
 import { UserContext } from '../context/UserContext'
 import {
   editADailyGratitude,
   newDailyGratitude,
   getADailyGratitude,
-  deleteADailyGratitude
+  deleteADailyGratitude,
+  getSingleSprint
 } from '../../lib/api'
-import FormStyle from '../../styles/styled-components/FormStyle'
 
+import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEdit } from '@fortawesome/free-solid-svg-icons'
+import FormStyle from '../../styles/styled-components/FormStyle'
 
 function DailyGratitudes() {
+  const location = useLocation()
   const { currentSprint } = React.useContext(UserContext) //getting current sprint from context
   const isLoading = !currentSprint
   const inputRefs = React.useRef([
@@ -32,32 +36,37 @@ function DailyGratitudes() {
       // checking if current sprint is defined yet
       return
     }
-    const fillerGratitudes = [...Array(3)].map(() => ({
-      id: null,
-      dailyGratitude: '',
-    })) // create placeholder/filler objects (in case there are fewer than 3 gratitudes coming back from the back-end) eg.  this morning I was only grateful for chocolate and nothing else. So this will fill the other 2 with the fillerGratitudes objects (this will also mean that the remaining 2 can be filled in)
+    const getData = async () => {
+      const res = await getSingleSprint(currentSprint?.id)
 
-    const temporaryGratitudes = [
-      // making sure that we have at least 3 objects that we can use to create the state we need with the .reduce()
-      ...currentSprint.dailyGratitudes.sort((a, b) => a.id - b.id), // getting the gratitudes from the sprint (if any) in the back-end, spread over them and sort by id (this is to make sure they render in order - they were coming back in a jumbled order!)
-      ...fillerGratitudes // filling the array with placeholder objects (fillerGratitudes) that mirror the initial state, so that we know that we have an array of at least 'length 3'. We need 'length 3' because there are 3 gratitudes to render
-    ]
-    temporaryGratitudes.length = 3 // because we always want to render just 3 gratitude slots (even though temporaryGratitudes may be more than that)
-    const syncedGratitudes = temporaryGratitudes.reduce(
-      // transforming the array of back-end gratitude objects/placeholders into a new object with .reduce() so that we can update state in the format that we need for the UI ({ id: ?, draft: ?, final: ? })
-      (newState, gratitude, i) => ({
-        // The callback function returns is going to be the accumulator on the next iteration or that is returned from the whole reduce (when you get to the last element in the array). The object we are returning is going to be the new state
-        ...newState, // spreading over the newState (the accumulator)
-        [`gratitude${i + 1}`]: {
-          draft: '',
-          final: gratitude.dailyGratitude,
-          id: gratitude.id,
-        }, // converting the object from the back-end OR the placeholder into the shape of object that we need for the front-end and to set in state
-      }),
-      {} // saying that what we return from the reduce() is going to be an object (the data type that we are going to accumulate)
-    )
-    setGratitudes(syncedGratitudes) // the result of the reduce() is being set as setGratitudes
-  }, [currentSprint]) // run useEffect again once we have the currentSprint from the back-end
+      const fillerGratitudes = [...Array(3)].map(() => ({
+        id: null,
+        dailyGratitude: '',
+      })) // create placeholder/filler objects (in case there are fewer than 3 gratitudes coming back from the back-end) eg.  this morning I was only grateful for chocolate and nothing else. So this will fill the other 2 with the fillerGratitudes objects (this will also mean that the remaining 2 can be filled in)
+
+      const temporaryGratitudes = [
+        // making sure that we have at least 3 objects that we can use to create the state we need with the .reduce()
+        ...res.data.dailyGratitudes.sort((a, b) => a.id - b.id), // getting the gratitudes from the sprint (if any) in the back-end, spread over them and sort by id (this is to make sure they render in order - they were coming back in a jumbled order!)
+        ...fillerGratitudes // filling the array with placeholder objects (fillerGratitudes) that mirror the initial state, so that we know that we have an array of at least 'length 3'. We need 'length 3' because there are 3 gratitudes to render
+      ]
+      temporaryGratitudes.length = 3 // because we always want to render just 3 gratitude slots (even though temporaryGratitudes may be more than that)
+      const syncedGratitudes = temporaryGratitudes.reduce(
+        // transforming the array of back-end gratitude objects/placeholders into a new object with .reduce() so that we can update state in the format that we need for the UI ({ id: ?, draft: ?, final: ? })
+        (newState, gratitude, i) => ({
+          // The callback function returns is going to be the accumulator on the next iteration or that is returned from the whole reduce (when you get to the last element in the array). The object we are returning is going to be the new state
+          ...newState, // spreading over the newState (the accumulator)
+          [`gratitude${i + 1}`]: {
+            draft: '',
+            final: gratitude.dailyGratitude,
+            id: gratitude.id,
+          }, // converting the object from the back-end OR the placeholder into the shape of object that we need for the front-end and to set in state
+        }),
+        {} // saying that what we return from the reduce() is going to be an object (the data type that we are going to accumulate)
+      )
+      setGratitudes(syncedGratitudes) // the result of the reduce() is being set as setGratitudes
+    }
+    getData()
+  }, [location]) // run useEffect again once we have the currentSprint from the back-end
 
   const handleChange = e => {
     setGratitudes({
@@ -123,7 +132,6 @@ function DailyGratitudes() {
   }
 
   const handleEdit = e => {
-    console.log(e.currentTarget.id)
     setGratitudes({
       ...gratitudes,
       [e.currentTarget.id]: {
@@ -149,7 +157,6 @@ function DailyGratitudes() {
         gratitude2: { draft: '', final: '', id: null },
         gratitude3: { draft: '', final: '', id: null },
       })
-      console.log('Gratitudes deleted')
     } catch (err) {
       console.log(err)
     }

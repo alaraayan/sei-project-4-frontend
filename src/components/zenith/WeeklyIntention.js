@@ -1,6 +1,12 @@
 import React from 'react'
+import { useLocation } from 'react-router-dom'
+
 import { UserContext } from '../context/UserContext'
-import { editAWeeklyIntention, newWeeklyIntention } from '../../lib/api'
+import {
+  editAWeeklyIntention,
+  newWeeklyIntention,
+  getSingleSprint
+} from '../../lib/api'
 
 import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -8,7 +14,7 @@ import { faEdit } from '@fortawesome/free-solid-svg-icons'
 
 function WeeklyIntention() {
   const { currentSprint } = React.useContext(UserContext)
-
+  const location = useLocation()
   const inputRef = React.useRef()
   const isLoading = !currentSprint
   const [intention, setIntention] = React.useState({
@@ -21,19 +27,22 @@ function WeeklyIntention() {
     if (!currentSprint) {
       return
     }
-    console.log(currentSprint.weeklyIntentions[0])
-    const weeklyIntention = currentSprint.weeklyIntentions[0]
+    const getData = async () => {
+      const res = await getSingleSprint(currentSprint?.id)
+      const weeklyIntention = res.data.weeklyIntentions[0]
 
-    if (!weeklyIntention) {
-      return
+      if (!weeklyIntention) {
+        return
+      }
+
+      setIntention({
+        draft: '',
+        final: weeklyIntention.weeklyIntention,
+        id: weeklyIntention.id,
+      })
     }
-
-    setIntention({
-      draft: '',
-      final: weeklyIntention.weeklyIntention,
-      id: weeklyIntention.id,
-    })
-  }, [currentSprint])
+    getData()
+  }, [location])
 
   const handleChange = e => {
     setIntention({

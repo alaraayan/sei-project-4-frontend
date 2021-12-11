@@ -1,20 +1,24 @@
 import React from 'react'
-import styled from 'styled-components'
-import FormStyle from '../../styles/styled-components/FormStyle'
+import { useLocation } from 'react-router-dom'
 
+import FormStyle from '../../styles/styled-components/FormStyle'
 import { UserContext } from '../context/UserContext'
 import {
   editADailyToDo,
   newDailyToDo,
   getADailyToDo,
-  deleteADailyToDo
+  deleteADailyToDo,
+  getSingleSprint
 } from '../../lib/api'
 
+import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEdit } from '@fortawesome/free-solid-svg-icons'
 
 function DailyToDoList() {
+  const location = useLocation()
   const { currentSprint } = React.useContext(UserContext)
+  // const [ongoingSprint, setOngoingSprint] = React.useState([])
   const isLoading = !currentSprint
   const inputRefs = React.useRef([
     React.createRef(),
@@ -23,6 +27,7 @@ function DailyToDoList() {
     React.createRef(),
     React.createRef()
   ])
+
   const [toDos, setToDos] = React.useState({
     toDo1: { draft: '', final: '', id: null },
     toDo2: { draft: '', final: '', id: null },
@@ -35,28 +40,33 @@ function DailyToDoList() {
     if (!currentSprint) {
       return
     }
-    const fillerToDos = [...Array(5)].map(() => ({
-      id: null,
-      toDoItem: '',
-    }))
-    const temporaryToDos = [
-      ...currentSprint.toDos.sort((a, b) => a.id - b.id),
-      ...fillerToDos
-    ]
-    temporaryToDos.length = 5
-    const syncedToDos = temporaryToDos.reduce(
-      (newState, toDo, i) => ({
-        ...newState,
-        [`to-dos${i + 1}`]: {
-          draft: '',
-          final: toDo.toDoItem,
-          id: toDo.id,
-        },
-      }),
-      {}
-    )
-    setToDos(syncedToDos)
-  }, [currentSprint])
+    const getData = async () => {
+      const res = await getSingleSprint(currentSprint?.id)
+
+      const fillerToDos = [...Array(5)].map(() => ({
+        id: null,
+        toDoItem: '',
+      }))
+      const temporaryToDos = [
+        ...res.data.toDos.sort((a, b) => a.id - b.id),
+        ...fillerToDos
+      ]
+      temporaryToDos.length = 5
+      const syncedToDos = temporaryToDos.reduce(
+        (newState, toDo, i) => ({
+          ...newState,
+          [`to-dos${i + 1}`]: {
+            draft: '',
+            final: toDo.toDoItem,
+            id: toDo.id,
+          },
+        }),
+        {}
+      )
+      setToDos(syncedToDos)
+    }
+    getData()
+  }, [location])
 
   const handleChange = e => {
     setToDos({
@@ -146,7 +156,6 @@ function DailyToDoList() {
         toDo4: { draft: '', final: '', id: null },
         toDo5: { draft: '', final: '', id: null },
       })
-      console.log('To-dos deleted')
     } catch (err) {
       console.log(err)
     }

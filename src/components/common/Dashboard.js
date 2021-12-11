@@ -1,5 +1,5 @@
 import React from 'react'
-import { useHistory, useLocation } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import styled from 'styled-components'
 import Card from '../../styles/styled-components/GlassCard'
 import { UserContext } from '../context/UserContext'
@@ -29,13 +29,10 @@ function calculateDaysIntoSprint(startDate) {
 }
 
 function Dashboard() {
-  useLocation()
   const history = useHistory()
   const isLoggedIn = isAuthenticated()
   const { user, currentSprint } = React.useContext(UserContext)
-
   const currentDay = calculateDaysIntoSprint(currentSprint?.startDate)
-
   if (user && !currentSprint) {
     history.push('/sprints/new')
   }

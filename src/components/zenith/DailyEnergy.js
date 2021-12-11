@@ -61,11 +61,13 @@ function DailyEnergy() {
   return (
     <>
       <h3>My energy level:</h3>
-      <Slider 
-        min={1} max={5} step={1}
-        marks={ marks}
-        dots={ true }
-        // value={} 
+      <Slider
+        min={1}
+        max={5}
+        step={1}
+        marks={marks}
+        dots={true}
+        // value={}
         onAfterChange={handleAfterChange}
         // defaultValue={1}
         // startPoint
@@ -89,7 +91,6 @@ function DailyEnergy() {
         activeDotStyle={{
           background: 'white',
         }}
-
       />
     </>
   )
