@@ -3,7 +3,12 @@ import styled from 'styled-components'
 import FormStyle from '../../styles/styled-components/FormStyle'
 
 import { UserContext } from '../context/UserContext'
-import axios from 'axios'
+import {
+  editASprintHabit,
+  newSprintHabit,
+  getASprintHabit,
+  deleteASprintHabit
+} from '../../lib/api'
 
 import { faEdit } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -93,18 +98,16 @@ function NewSprintHabits() {
   const updatedHabits = async (habitToUpdate, existingId) => {
     try {
       if (existingId) {
-        const { data: putData } = await axios.put(
-          `${process.env.REACT_APP_PROD_URL}/sprints/${currentSprint?.id}/sprint-habits/${existingId}/`,
+        const { data: putData } = await editASprintHabit(
+          currentSprint?.id,
+          existingId,
           { habitName: habitToUpdate }
         )
         return putData.id
       }
-      const { data: postData } = await axios.post(
-        `${process.env.REACT_APP_PROD_URL}/sprints/${currentSprint?.id}/sprint-habits/`,
-        {
-          habitName: habitToUpdate,
-        }
-      )
+      const { data: postData } = await newSprintHabit(currentSprint?.id, {
+        habitName: habitToUpdate,
+      })
       return postData.id
     } catch (err) {
       console.log(err)
@@ -124,14 +127,10 @@ function NewSprintHabits() {
 
   const clearSprintHabits = async () => {
     try {
-      const { data } = await axios.get(
-        `${process.env.REACT_APP_PROD_URL}/sprints/${currentSprint?.id}/sprint-habits/`
-      )
+      const { data } = await getASprintHabit(currentSprint?.id)
       for (const sprintHabit of data) {
         try {
-          await axios.delete(
-            `${process.env.REACT_APP_PROD_URL}/sprints/${currentSprint?.id}/sprint-habits/${sprintHabit.id}/`
-          )
+          await deleteASprintHabit(currentSprint?.id, sprintHabit.id)
         } catch (err) {
           console.log(err)
         }

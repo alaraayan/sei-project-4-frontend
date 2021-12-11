@@ -1,7 +1,12 @@
 import React from 'react'
 import styled from 'styled-components'
 import { UserContext } from '../context/UserContext'
-import axios from 'axios'
+import {
+  editADailyGratitude,
+  newDailyGratitude,
+  getADailyGratitude,
+  deleteADailyGratitude
+} from '../../lib/api'
 import FormStyle from '../../styles/styled-components/FormStyle'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -101,18 +106,16 @@ function DailyGratitudes() {
   const updateGratitudes = async (gratitudeText, existingId) => {
     try {
       if (existingId) {
-        const { data: putData } = await axios.put(
-          `${process.env.REACT_APP_PROD_URL}/sprints/${currentSprint?.id}/gratitudes/${existingId}/`,
+        const { data: putData } = await editADailyGratitude(
+          currentSprint?.id,
+          existingId,
           { dailyGratitude: gratitudeText }
         )
         return putData.id
       }
-      const { data: postData } = await axios.post(
-        `${process.env.REACT_APP_PROD_URL}/sprints/${currentSprint?.id}/gratitudes/`,
-        {
-          dailyGratitude: gratitudeText,
-        }
-      )
+      const { data: postData } = await newDailyGratitude(currentSprint?.id, {
+        dailyGratitude: gratitudeText,
+      })
       return postData.id
     } catch (err) {
       console.log(err)
@@ -133,14 +136,10 @@ function DailyGratitudes() {
 
   const clearGratitudes = async () => {
     try {
-      const { data } = await axios.get(
-        `${process.env.REACT_APP_PROD_URL}/sprints/${currentSprint?.id}/gratitudes/`
-      )
+      const { data } = await getADailyGratitude(currentSprint?.id)
       for (const gratitude of data) {
         try {
-          await axios.delete(
-            `${process.env.REACT_APP_PROD_URL}/sprints/${currentSprint?.id}/gratitudes/${gratitude.id}/`
-          )
+          await deleteADailyGratitude(currentSprint?.id, gratitude.id)
         } catch (err) {
           console.log(err)
         }

@@ -3,7 +3,12 @@ import styled from 'styled-components'
 import FormStyle from '../../styles/styled-components/FormStyle'
 
 import { UserContext } from '../context/UserContext'
-import axios from 'axios'
+import {
+  editADailyToDo,
+  newDailyToDo,
+  getADailyToDo,
+  deleteADailyToDo
+} from '../../lib/api'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEdit } from '@fortawesome/free-solid-svg-icons'
@@ -97,18 +102,16 @@ function DailyToDoList() {
   const updatedToDos = async (toDoTextToUpdate, existingId) => {
     try {
       if (existingId) {
-        const { data: putData } = await axios.put(
-          `${process.env.REACT_APP_PROD_URL}/sprints/${currentSprint?.id}/to-dos/${existingId}/`,
+        const { data: putData } = await editADailyToDo(
+          currentSprint?.id,
+          existingId,
           { toDoItem: toDoTextToUpdate }
         )
         return putData.id
       }
-      const { data: postData } = await axios.post(
-        `${process.env.REACT_APP_PROD_URL}/sprints/${currentSprint?.id}/to-dos/`,
-        {
-          toDoItem: toDoTextToUpdate,
-        }
-      )
+      const { data: postData } = await newDailyToDo(currentSprint?.id, {
+        toDoItem: toDoTextToUpdate,
+      })
       return postData.id
     } catch (err) {
       console.log(err)
@@ -128,14 +131,10 @@ function DailyToDoList() {
 
   const clearToDos = async () => {
     try {
-      const { data } = await axios.get(
-        `${process.env.REACT_APP_PROD_URL}/sprints/${currentSprint?.id}/to-dos/`
-      )
+      const { data } = await getADailyToDo(currentSprint?.id)
       for (const toDo of data) {
         try {
-          await axios.delete(
-            `${process.env.REACT_APP_PROD_URL}/sprints/${currentSprint?.id}/to-dos/${toDo.id}/`
-          )
+          await deleteADailyToDo(currentSprint?.id, toDo.id)
         } catch (err) {
           console.log(err)
         }

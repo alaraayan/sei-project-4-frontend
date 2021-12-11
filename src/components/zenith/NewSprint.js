@@ -14,7 +14,7 @@ export default function NewSprint() {
   const [isStartingNewSprint, setisStartingNewSprint] = React.useState(false)
   const history = useHistory()
   const { user, refreshUser } = React.useContext(UserContext)
-  console.log(user)
+  // console.log(user)
   const isLoading = !user
   const { formData, formErrors, handleChange } = useForm({
     sprintName: '',

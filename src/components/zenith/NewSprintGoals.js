@@ -3,7 +3,12 @@ import styled from 'styled-components'
 import FormStyle from '../../styles/styled-components/FormStyle'
 
 import { UserContext } from '../context/UserContext'
-import axios from 'axios'
+import {
+  editASprintGoal,
+  newSprintGoal,
+  getASprintGoal,
+  deleteASprintGoal
+} from '../../lib/api'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEdit } from '@fortawesome/free-solid-svg-icons'
@@ -100,18 +105,16 @@ function NewSprintGoals() {
   const updateSprintGoals = async (sprintGoalToUpdate, existingId) => {
     try {
       if (existingId) {
-        const { data: putData } = await axios.put(
-          `${process.env.REACT_APP_PROD_URL}/sprints/${currentSprint?.id}/sprint-goals/${existingId}/`,
+        const { data: putData } = await editASprintGoal(
+          currentSprint?.id,
+          existingId,
           { goalName: sprintGoalToUpdate }
         )
         return putData.id
       }
-      const { data: postData } = await axios.post(
-        `${process.env.REACT_APP_PROD_URL}/sprints/${currentSprint?.id}/sprint-goals/`,
-        {
-          goalName: sprintGoalToUpdate,
-        }
-      )
+      const { data: postData } = await newSprintGoal(currentSprint?.id, {
+        goalName: sprintGoalToUpdate,
+      })
       return postData.id
     } catch (err) {
       console.log(err)
@@ -131,14 +134,10 @@ function NewSprintGoals() {
 
   const clearSprintGoals = async () => {
     try {
-      const { data } = await axios.get(
-        `${process.env.REACT_APP_PROD_URL}/sprints/${currentSprint?.id}/sprint-goals/`
-      )
+      const { data } = await getASprintGoal(currentSprint?.id)
       for (const sprintGoal of data) {
         try {
-          await axios.delete(
-            `${process.env.REACT_APP_PROD_URL}/sprints/${currentSprint?.id}/sprint-goals/${sprintGoal.id}/`
-          )
+          await deleteASprintGoal(currentSprint?.id, sprintGoal.id)
         } catch (err) {
           console.log(err)
         }

@@ -1,6 +1,6 @@
 import React from 'react'
 import { UserContext } from '../context/UserContext'
-import axios from 'axios'
+import { editAWeeklyIntention, newWeeklyIntention } from '../../lib/api'
 
 import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -61,17 +61,17 @@ function WeeklyIntention() {
   const updateIntention = async (intentionText, existingId) => {
     try {
       if (existingId) {
-        const { data: putData } = await axios.put(
-          `${process.env.REACT_APP_PROD_URL}/sprints/${currentSprint?.id}/intentions/${existingId}/`,
+        const { data: putData } = await editAWeeklyIntention(
+          currentSprint?.id,
+          existingId,
           { weeklyIntention: intentionText }
         )
         console.log(putData, currentSprint)
         return putData.id
       }
-      const { data: postData } = await axios.post(
-        `${process.env.REACT_APP_PROD_URL}/sprints/${currentSprint?.id}/intentions/`,
-        { weeklyIntention: intentionText }
-      )
+      const { data: postData } = await newWeeklyIntention(currentSprint?.id, {
+        weeklyIntention: intentionText,
+      })
       console.log(postData, currentSprint)
       return postData.id
     } catch (err) {
