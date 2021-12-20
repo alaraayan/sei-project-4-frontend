@@ -54,7 +54,7 @@ The brief given was to:
 - Django
 - Django REST Framework
 
-**Backend**
+**Database**
 
 - PostgreSQL
 
